@@ -1,3 +1,4 @@
+#Originally created by Pixegami
 import argparse
 import os
 import shutil
@@ -8,8 +9,8 @@ from get_embedding_function import get_embedding_function
 from langchain_chroma import Chroma
 
 
-CHROMA_PATH = "~/spotted/scout/database"
-DATA_PATH = "~/spotted/scout/data"
+CHROMA_PATH = "PATH/TO/DATABASE"
+DATA_PATH = "/pATH/TO/DATA"
 
 
 def main():
