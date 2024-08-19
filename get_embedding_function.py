@@ -1,3 +1,4 @@
+#Based off of Pixegami and modified to Use HuggingFace instead of Ollama and Bedrock embeddings
 from langchain_huggingface import HuggingFaceEmbeddings
 
 
