@@ -1,3 +1,4 @@
+#Created By IamSpotted. This Interactive script does not include a chat memory
 import os
 import warnings
 from langchain.chains import RetrievalQA
