@@ -1,3 +1,4 @@
+#Created by IamSpotted. This script incorporates chat memory so that you can have a conversation with contect.
 import os
 import warnings
 from langchain.chains import RetrievalQA
