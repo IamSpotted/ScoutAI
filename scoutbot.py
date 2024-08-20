@@ -15,16 +15,16 @@ warnings.filterwarnings("ignore")
 
 #Database Paths
 CHROMA_PATH = {
-    "1": "/home/spotted/scout/database",
-    "2": "/Path/to/database2"
+    "1": {"name": "Scout", "path": "/home/spotted/scout/database"},
+    "2": {"name": "Example", "path": "/Path/to/database2"}
 }
 
 #Database selection loop
 while True:
     #Display database options
     print("Please select a database (enter numbers separated by commas):")
-    for key, path in CHROMA_PATH.items():
-        print(f"{key}: {path}")
+    for key, info in CHROMA_PATH.items():
+        print(f"{key}: {info['name']}")
 
     print("a: query all databases")
     print("0: Exit")
@@ -36,7 +36,7 @@ while True:
         exit()
 
     if db_choice == "a":
-        databases_selected = list(CHROMA_PATH.values())
+        databases_selected = [info["path"] for info in CHROMA_PATH.values()]
         break
 
     selected_ids = db_choice.split(',')
@@ -46,9 +46,9 @@ while True:
     for db_id in selected_ids:
         db_id = db_id.strip()
         if db_id in CHROMA_PATH:
-            databases_selected.append(CHROMA_PATH[db_id])
+            databases_selected.append(CHROMA_PATH[db_id])["path"]
         else:
-            print(f"Invalid Selection '{db_id}. Please make a valid selection.")
+            print(f"Invalid Selection '{db_id}.")
             valid_selection = False
 
     if valid_selection and databases_selected:
