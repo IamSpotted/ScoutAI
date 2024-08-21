@@ -86,7 +86,7 @@ def database_management_menu():
         elif choice == "3":
             print("Deleting a database...")
             # Add your logic to delete a database
-        elif choice == "0":
+        elif choice in ("0", "exit", "x"):
             break
         else:
             print("Invalid selection. Please try again.")
