@@ -16,20 +16,7 @@ warnings.filterwarnings("ignore")
 # Global Variables
 qa_chain = None
 memory = None
-"""
-def load_config(file_path):
-    #Load configuration from a JSON file.
-    try:
-        with open(file_path, 'r') as file:
-            config = json.load(file)
-        return config
-    except FileNotFoundError:
-        print(f"Error: The configuration file '{file_path}' was not found.")
-        exit()
-    except json.JSONDecodeError:
-        print("Error: Configuration file is not a valid JSON.")
-        exit()
-"""
+
 def load_config(file_path):
     """Load configuration from a JSON file or create one if it does not exist."""
     default_config = {
