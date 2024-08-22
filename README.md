@@ -6,8 +6,8 @@ This chatbot is designed to interact with users and handle various database mana
 
 ## Features
 
-- **Database Management**: Manage your databases with a simple interface that gives you flexibity.
-- **Chatbot Interface**: Chatbot interface allows you to choose which database the Chatbot will interact with.
+- **Database Management**: Create, update, and manage databases with ease.
+- **Chatbot Interface**: Interact with the chatbot to query the databases and get insights.
 - **Customizable**: Adjust chunk size, overlap, and other settings to fit your needs.
 
 ## Installation
@@ -34,11 +34,14 @@ This chatbot is designed to interact with users and handle various database mana
     pip install -r requirements.txt
     ```
 
-4. **Configure the application:**
+4. **Place the `chat` script in `/usr/local/bin`:**
 
-   The config file will be automatically created the first time you launch the chatbot.
+    Copy the `chat` script to `/usr/local/bin` to make it accessible from anywhere:
 
-    
+    ```bash
+    sudo cp chat /usr/local/bin/
+    sudo chmod +x /usr/local/bin/chat
+    ```
 
 ### Using Poetry
 
@@ -67,9 +70,14 @@ This chatbot is designed to interact with users and handle various database mana
     poetry shell
     ```
 
-5. **Configure the application:**
+5. **Place the `chat` script in `/usr/local/bin`:**
 
-    The config file will be automatically created the first time you launch the chatbot.
+    Copy the `chat` script to `/usr/local/bin` to make it accessible from anywhere:
+
+    ```bash
+    sudo cp chat /usr/local/bin/
+    sudo chmod +x /usr/local/bin/chat
+    ```
 
 ## Usage
 
@@ -78,4 +86,4 @@ This chatbot is designed to interact with users and handle various database mana
 To start the application, run:
 
 ```bash
-python main.py
+chat
