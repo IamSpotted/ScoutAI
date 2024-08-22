@@ -2,7 +2,7 @@
 
 ### Overview
 
-This script is part of the **ScoutAI** project, which provides both database management and chatbot functionalities. Below is a high-level breakdown of the main features:
+This chatbot is part of the **ScoutAI** project, which provides both database management and chatbot functionalities. Below is a high-level breakdown of the main features:
 
 - **Configuration Management**: 
   The script automatically loads configuration settings from a `config.json` file. If the file doesn't exist, it generates one with default values.
