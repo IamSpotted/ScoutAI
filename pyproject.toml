@@ -2,7 +2,7 @@
 name = "scout"
 version = "0.1.0"
 description = ""
-authors = ["Jon Uldrick <jon.uldrick@iamspotted.com>"]
+authors = ["IamSpotted <I_am_spotted@iamspotted.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
