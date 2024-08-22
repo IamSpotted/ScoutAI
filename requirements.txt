@@ -2,4 +2,5 @@ langchain==0.0.1
 langchain-ollama==0.0.1
 langchain-chroma==0.0.1
 langchain-community==0.0.1
+langchain-huggingface==0.0.1
 tqdm==4.64.1
