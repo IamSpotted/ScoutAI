@@ -100,7 +100,7 @@ This chatbot is part of the **ScoutAI** project, which provides both database ma
 1. **Clone the repository:**
 
     ```bash
-    git clone https://github.com/yourusername/chatbot.git
+    git clone https://github.com/IamSpotted/ScoutAI.git
     cd chatbot
     ```
 
@@ -131,7 +131,7 @@ This chatbot is part of the **ScoutAI** project, which provides both database ma
 1. **Clone the repository:**
 
     ```bash
-    git clone https://github.com/yourusername/chatbot.git
+    git clone https://github.com/IamSpotted/ScoutAI.git
     cd chatbot
     ```
 
