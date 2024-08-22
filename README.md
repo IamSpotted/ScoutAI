@@ -36,18 +36,9 @@ This chatbot is designed to interact with users and handle various database mana
 
 4. **Configure the application:**
 
-    Create a `config.json` file in the root directory with the following structure:
+   The config file will be automatically created the first time you launch the chatbot.
 
-    ```json
-    {
-        "database_paths": [
-            {
-                "name": "example_db",
-                "path": "/path/to/database"
-            }
-        ]
-    }
-    ```
+    
 
 ### Using Poetry
 
