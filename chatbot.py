@@ -222,7 +222,7 @@ def add_database(database_paths):
     # Create the new database using the existing script logic
     from langchain.vectorstores import Chroma
     from langchain.text_splitter import RecursiveCharacterTextSplitter
-    from langchain.embeddings import OpenAIEmbeddings  # or whatever embedding function you're using
+    from langchain.embeddings import HuggingFaceEmbeddings  # or whatever embedding function you're using
 
     # Initialize document loader
     loader = PyPDFDirectoryLoader(data_directory)
