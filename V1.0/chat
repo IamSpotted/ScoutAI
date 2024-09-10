@@ -1,0 +1,4 @@
+#!/bin/bash
+cd /home/cavllm/ScoutAI || exit
+poetry run python scoutbot.py
+#Added this note for testing purposes
