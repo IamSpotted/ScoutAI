@@ -13,6 +13,10 @@ This chatbot is part of the **ScoutAI** project, which provides both database ma
 - **Document Processing**:
   Documents, currently only PDFs, are loaded from directories, split into chunks using customizable chunk sizes and overlap, and embedded using a retrieval model.
 
+- **PDF Scraping and Downloading**: Scrape web pages for PDF links, download them concurrently, and track progress.
+
+- **Logging and Configuration**: Maintain logs of downloaded PDFs and completed pages, and handle configurations with default settings.
+
 - **Chatbot Interface**:
   A conversational chatbot can be launched after selecting one or more databases. The chatbot leverages a retrieval-based QA model to answer queries, maintaining conversation context through memory.
 
@@ -59,6 +63,17 @@ This chatbot is part of the **ScoutAI** project, which provides both database ma
 - **User-Friendly CLI**:
   - Simple, interactive command-line interface for managing database operations.
   - Easy navigation between adding, updating, or deleting databases.
+
+### Downloading Features
+
+- **Downloading Single PDFs**:
+  - Enter a direct URL to download individual PDFs.
+  - Specify the location to save them to.
+
+- **Scraping Functionality**:
+  - Can specify download directory, concurrent pages, concurrent downloads, max downloads, min and max random delay, max requests per minute, and user-agent string.
+  - If no user-agent is provided it will choose from one of five random user-agent headers
+  - Logging prevents duplicating PDFs by storing the download URL in a SQLite database and comparing downloads to the database.
  
 ### Chatbot Features
 
@@ -170,3 +185,7 @@ To start the application, run:
 
 ```bash
 chat
+```
+
+## Contributing
+  -Feel free to submit issues, fork the repository, and create pull requests. For major changes, please open an issue first to discuss what you would like to change.
