@@ -1,8 +1,8 @@
 import os
 import json
 import warnings
-import random
 import shutil
+import random
 import asyncio
 import logging
 from tqdm import tqdm  # Progress bar library
@@ -160,9 +160,9 @@ def reprocess_and_update(chunks, db_path, chunk_size, chunk_overlap):
         vector_store.add_documents(chunks)
         pbar.update(len(chunks))
 
-    # Save the updated vector store
-    print("Saving the updated database...")
-    vector_store.persist()
+    # Save the updated vector store COMMENTED OUT FOR TESTING
+    #print("Saving the updated database...")
+    #vector_store.persist()
 
     print(f"Database at '{db_path}' has been updated successfully.")
 
@@ -668,4 +668,4 @@ async def main():
         os.remove(batch_file_path)
 
 if __name__ == "__main__":
-    asyncio.run(main_menu())
+    asyncio.run(main_menu)
