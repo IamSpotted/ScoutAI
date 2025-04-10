@@ -82,14 +82,18 @@ def sanitize_path(user_input: str, base_dir: str = None) -> str:
     
     return str(path)
 
-def is_valid_url(url: str, allowed_domains: list = None) -> bool:
+def is_valid_url(url: str, allowed_domains: list = None, require_https: bool = True) -> str:
     """Validate URL scheme, domain, and (optionally) restrict to allowed domains."""
     if not validators.url(url):  # Checks scheme, netloc, etc.
-        return False
+        raise ValueError("Invalid URL format")
+
     parsed = urlparse(url)
+    if require_https and parsed.scheme != "https":
+        raise ValueError("HTTPS is required")
     if allowed_domains and parsed.netloc not in allowed_domains:
-        return False
-    return True
+        raise ValueError(f"Domain not allowed: {parsed.netloc}")
+    
+    return url  # Return normalized URL
 
 def handle_interrupt():
     """Handle keyboard interrupt with confirmation."""
@@ -545,10 +549,17 @@ async def main():
     # Create the tables if they don't exist
     Base.metadata.create_all(bind=engine)
 
+    ALLOWED_DOMAINS = ["trusted.com", "trusted.org"]  # Configure as needed
+
     url = input("Enter the URL: ")
-    download_dir = os.path.expanduser(input("Enter the download directory: "))
-    pdf_log_file = os.path.expanduser(input("Enter the PDF log file path (relative to download directory): "))
-    completed_page_log_file = os.path.expanduser(input("Enter the completed pages log file path (relative to download directory): "))
+    try:
+        url = validate_url(url, allowed_domains=ALLOWED_DOMAINS)
+    except ValueError as e:
+        print(f"Invalid URL: {e}")
+        return
+    download_dir = sanitize_path(input("Enter download directory: "), base_dir="~/chatbot/downloads")
+    pdf_log_file = sanitize_path(input("Enter PDF log file path: "), base_dir=download_dir
+    completed_page_log_file = sanitize_path(input("Enter the completed pages log file path: "), base_dir=download_dir)
 
     # Ensure the directory for logs and downloads exists
     os.makedirs(download_dir, exist_ok=True)
@@ -569,13 +580,20 @@ async def main():
     batch_file_path = os.path.join(download_dir, 'batch_urls.txt')
 
     async with aiofiles.open(temp_file_path, 'w') as temp_file:
-        # Fetch completed pages
-        completed_pages = session.query(CompletedPagesLog).filter(CompletedPagesLog.url.like(f"%{urlparse(url).netloc}%")).all()
+        # Escape wildcards (%) and underscores (_) in the domain
+        netloc = urlparse(url).netloc.replace("%", r"\%").replace("_", r"\_")
+
+        # Fetch completed pages (safe)
+        completed_pages = session.query(CompletedPagesLog).filter(
+            CompletedPagesLog.url.like(f"%{netloc}%", escape="\\")
+        ).all()
         for page in completed_pages:
             await temp_file.write(f"{page.url}\n")
         
-        # Fetch downloaded PDFs
-        downloaded_pdfs = session.query(PdfDownloadLog).filter(PdfDownloadLog.url.like(f"%{urlparse(url).netloc}%")).all()
+        # Fetch downloaded PDFs (safe)
+        downloaded_pdfs = session.query(PdfDownloadLog).filter(
+            PdfDownloadLog.url.like(f"%{netloc}%", escape="\\")
+        ).all()
         for pdf in downloaded_pdfs:
             await temp_file.write(f"{pdf.url}\n")
 
