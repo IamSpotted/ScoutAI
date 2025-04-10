@@ -416,7 +416,11 @@ async def scrape_for_pdfs(url, download_dir, concurrent_pages, concurrent_downlo
 
     async with async_playwright() as p:
         browser = await p.chromium.launch(headless=True)
-
+        args=[
+            "--disable-web-security",
+            #"--no-sandbox", # Only if running in container
+            "--timeout=30000"
+        ]
         async def navigate_and_scrape(url):
             async with download_count_lock:
                 if download_count >= max_downloads:
@@ -541,9 +545,9 @@ async def main_menu():
 
 async def main():
     # Setup database session
-    db_path = os.path.expanduser('~/chatbot/logging/logging_db.sqlite')
+    db_path = sanitize_path(os.getenv("DB_PATH", "~/chatbot/logging/logging_db.sqlite"))
     DATABASE_URL = f'sqlite:///{db_path}'
-    engine = create_engine(DATABASE_URL, echo=True)
+    engine = create_engine(DATABASE_URL, echo=False, hide_parameters=True)
     SessionLocal = sessionmaker(bind=engine)
 
     # Create the tables if they don't exist
