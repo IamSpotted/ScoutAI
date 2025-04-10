@@ -5,6 +5,10 @@ import random
 import shutil
 import asyncio
 import logging
+import validators
+import aiofiles
+import aiohttp
+import shlex
 from tqdm import tqdm  # Progress bar library
 from langchain.chains import RetrievalQA
 from langchain_ollama import ChatOllama
@@ -16,11 +20,12 @@ from urllib.parse import urlparse, urljoin
 from get_embedding_function import get_embedding_function
 from playwright.async_api import async_playwright
 from tqdm.asyncio import tqdm
-import aiofiles
-import aiohttp
+from pathlib import Path
+
 from urllib.parse import urlparse
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy import and_
 from logging_models import PdfDownloadLog, CompletedPagesLog, Base
 
 # Ignore Warnings
@@ -60,6 +65,31 @@ def save_config(file_path, config):
     """Save configuration to a JSON file."""
     with open(file_path, 'w') as file:
         json.dump(config, file, indent=4)
+
+def sanitize_path(user_input: str, base_dir: str = None) -> str:
+    """Resolve and restrict paths to a base directory."""
+    if base_dir is None:
+        base_dir = os.getenv("SAFE_BASE_DIR", os.path.expanduser("~"))
+    
+    path = Path(os.path.expanduser(user_input)).resolve()
+    base_path = Path(base_dir).resolve()
+
+    # Block symlinks and parent traversal
+    if path.is_symlink():
+        raise ValueError("Symbolic links are not allowed")
+    if base_path not in path.parents and path != base_path:
+        raise ValueError(f"Path traversal blocked: '{path}'")
+    
+    return str(path)
+
+def is_valid_url(url: str, allowed_domains: list = None) -> bool:
+    """Validate URL scheme, domain, and (optionally) restrict to allowed domains."""
+    if not validators.url(url):  # Checks scheme, netloc, etc.
+        return False
+    parsed = urlparse(url)
+    if allowed_domains and parsed.netloc not in allowed_domains:
+        return False
+    return True
 
 def handle_interrupt():
     """Handle keyboard interrupt with confirmation."""
